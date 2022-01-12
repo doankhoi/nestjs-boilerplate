@@ -1,0 +1,7 @@
+type HelloMessage {
+  message: String!
+}
+
+type Query {
+  hello: HelloMessage
+}
