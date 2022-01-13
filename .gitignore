@@ -11,6 +11,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# generate file
+/src/generator/
+
 # OS
 .DS_Store
 

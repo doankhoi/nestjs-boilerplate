@@ -1,7 +1,0 @@
-type HelloMessage {
-  message: String! @upper
-}
-
-type Query {
-  hello: HelloMessage
-}

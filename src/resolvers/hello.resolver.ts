@@ -3,7 +3,7 @@ import { Resolver, Query } from '@nestjs/graphql';
 
 @Resolver('HelloMessage')
 export class HelloWorldResolver {
-  @Query()
+  @Query(() => HelloMessage)
   async hello(): Promise<HelloMessage> {
     return { message: 'So cool' };
   }
