@@ -7,6 +7,7 @@ import * as bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import { env } from '@environments';
 import {
+  LoggerMiddleware,
   LoggingInterceptor,
   TimeoutInterceptor,
   ValidationPipe,
@@ -19,6 +20,8 @@ async function bootstrap() {
 
   app.use(compression());
   app.use(bodyParser.json({ limit: '50mb' }));
+
+  env.get('environment') === 'development' && app.use(LoggerMiddleware);
 
   app.use(
     bodyParser.urlencoded({

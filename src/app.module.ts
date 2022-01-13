@@ -3,7 +3,7 @@ import { Module, CacheModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GraphqlService, CacheService } from '@configs';
+import { GraphqlService, CacheService, DateScalar } from '@configs';
 import * as Resolvers from './resolvers';
 
 @Module({
@@ -16,6 +16,6 @@ import * as Resolvers from './resolvers';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, ...Object.values(Resolvers)],
+  providers: [AppService, ...Object.values(Resolvers), DateScalar],
 })
 export class AppModule {}
