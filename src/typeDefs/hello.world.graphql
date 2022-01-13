@@ -1,5 +1,5 @@
 type HelloMessage {
-  message: String!
+  message: String! @upper
 }
 
 type Query {

@@ -15,4 +15,6 @@ export abstract class IQuery {
     abstract hello(): Nullable<HelloMessage> | Promise<Nullable<HelloMessage>>;
 }
 
+export type JSON = any;
+export type JSONObject = any;
 type Nullable<T> = T | null;

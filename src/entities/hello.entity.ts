@@ -1,4 +1,4 @@
-import { Field, ObjectType, Directive } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Expose, plainToClass } from 'class-transformer';
 
 @ObjectType()
