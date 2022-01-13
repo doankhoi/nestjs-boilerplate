@@ -7,5 +7,5 @@ definitionsFactory.generate({
   path: join(process.cwd(), 'src/generator/graphql.schema.ts'),
   outputAs: 'class',
   debug: true,
-  // emitTypenameField: true,
+  watch: true,
 });

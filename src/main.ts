@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { CustomLogger } from '@configs';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
-import * as helmet from 'helmet';
 
 import rateLimit from 'express-rate-limit';
 import { env } from '@environments';
@@ -20,8 +19,6 @@ async function bootstrap() {
 
   app.use(compression());
   app.use(bodyParser.json({ limit: '50mb' }));
-  // @ts-ignore
-  app.use(helmet());
 
   app.use(
     bodyParser.urlencoded({
