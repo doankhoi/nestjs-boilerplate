@@ -35,6 +35,9 @@
       ],
       "@environments": [
         "src/environments"
+      ],
+      "@services": [
+        "src/services"
       ]
     }
   }

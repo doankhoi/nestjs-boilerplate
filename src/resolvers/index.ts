@@ -1,1 +1,1 @@
-export * from './hello.resolver';
+export * from './posts.resolver';

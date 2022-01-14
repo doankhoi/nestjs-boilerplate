@@ -2,21 +2,25 @@ import { Field, ObjectType, Directive } from '@nestjs/graphql';
 import { Expose, plainToClass } from 'class-transformer';
 
 @ObjectType()
-export class HelloMessage {
+export class Post {
   @Expose()
   @Directive('@upper')
-  @Field((type) => String)
-  message: string;
+  @Field(() => String)
+  title: string;
 
   @Expose()
-  @Field((type) => Date, { nullable: true })
+  @Field(() => String)
+  body: string;
+
+  @Expose()
+  @Field(() => Date, { nullable: true })
   createdAt?: string;
 
-  constructor(helloMessage: Partial<HelloMessage>) {
-    if (helloMessage) {
+  constructor(post: Partial<Post>) {
+    if (post) {
       Object.assign(
         this,
-        plainToClass(HelloMessage, helloMessage, {
+        plainToClass(Post, post, {
           excludeExtraneousValues: true,
         }),
       );

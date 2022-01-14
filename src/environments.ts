@@ -34,6 +34,12 @@ export const env = convict({
     env: 'RATE_LIMIT_MAX',
     doc: 'Rate limit request / IP',
   },
+  mongoUrl: {
+    format: String,
+    default: 'mongodb://localhost:27017/lixibox',
+    env: 'MONGODB_URL',
+    doc: 'Mongo Database Url',
+  },
 });
 
 export default env;
