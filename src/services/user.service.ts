@@ -12,9 +12,6 @@ export class UserService {
   }
 
   findUserByWalletAddress(walletAddress: string) {
-    console.log('Enter find user');
-    console.log(this.userRepository);
-
     return this.userRepository
       .getRepository()
       .findOne({ where: { walletAddress } });
