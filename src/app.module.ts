@@ -11,7 +11,7 @@ import {
   TypeOrmService,
 } from '@configs';
 import * as Resolvers from './resolvers';
-import { PostService } from '@services';
+import { PostService, UserService } from '@services';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -26,6 +26,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({ useClass: TypeOrmService }),
   ],
   controllers: [AppController],
-  providers: [AppService, ...Object.values(Resolvers), DateScalar, PostService],
+  providers: [
+    AppService,
+    ...Object.values(Resolvers),
+    DateScalar,
+    PostService,
+    UserService,
+  ],
 })
 export class AppModule {}
