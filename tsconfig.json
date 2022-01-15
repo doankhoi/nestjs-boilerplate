@@ -38,6 +38,12 @@
       ],
       "@services": [
         "src/services"
+      ],
+      "@repositories": [
+        "src/repositories"
+      ],
+      "@dtos": [
+        "src/dtos"
       ]
     }
   }
