@@ -1,4 +1,5 @@
 import { getMongoRepository, EntityTarget } from 'typeorm';
+import { ObjectID } from 'mongodb';
 
 export class BaseRepository<T> {
   public model: EntityTarget<T>;
@@ -12,7 +13,10 @@ export class BaseRepository<T> {
   }
 
   public findById(id: string) {
-    return this.getRepository().findOne({ where: { _id: id }, cache: true });
+    return this.getRepository().findOne({
+      where: { _id: new ObjectID(id) },
+      cache: true,
+    });
   }
 
   public findAndCount(limit = 10, offset = 0) {

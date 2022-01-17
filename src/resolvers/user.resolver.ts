@@ -11,7 +11,6 @@ export class UsersResolver {
   @Mutation(() => User)
   async signup(@Args('input') input: SignupDto): Promise<User> {
     const { walletAddress } = input;
-    console.log('Enter here');
     const user = await this.userService.findUserByWalletAddress(walletAddress);
     if (user) {
       throw new UserInputError('User already existed');
