@@ -5,7 +5,7 @@ import { UserRepository } from '@repositories';
 
 @Injectable()
 export class UserService {
-  private userRepository: UserRepository;
+  public userRepository: UserRepository;
 
   constructor() {
     this.userRepository = new UserRepository();

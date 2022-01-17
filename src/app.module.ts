@@ -11,7 +11,7 @@ import {
   TypeOrmService,
 } from '@configs';
 import * as Resolvers from './resolvers';
-import { PostService, UserService } from '@services';
+import * as Services from '@services';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -30,8 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AppService,
     ...Object.values(Resolvers),
     DateScalar,
-    PostService,
-    UserService,
+    ...Object.values(Services),
   ],
 })
 export class AppModule {}

@@ -40,6 +40,32 @@ export const env = convict({
     env: 'MONGODB_URL',
     doc: 'Mongo Database Url',
   },
+  mail: {
+    author: {
+      format: String,
+      default: 'Lixi',
+      env: 'MAIL_AUTHOR',
+      doc: 'Name of sender',
+    },
+    issuer: {
+      format: String,
+      default: 'Lixi NFT Team',
+      env: 'MAIL_ISSUER',
+      doc: '',
+    },
+    nodemailerUser: {
+      format: String,
+      default: 'apikey',
+      env: 'NODEMAILER_USER',
+      doc: 'Type of user mail service',
+    },
+    nodemailerPass: {
+      format: String,
+      default: '',
+      env: 'NODEMAILER_PASS',
+      doc: 'Api key mail',
+    },
+  },
 });
 
 export default env;
