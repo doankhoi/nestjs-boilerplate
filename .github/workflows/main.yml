@@ -6,7 +6,7 @@ on:
 env:
   SERVICE_NAME: 'lixi-nft-be'
   DOCKER_USERNAME: 'cohostai'
-  CONTAINER_SERVICE_NAME: 'lixinft-be'
+  CONTAINER_SERVICE_NAME: 'lixi-nft-be'
 
 jobs:
   build-service:
