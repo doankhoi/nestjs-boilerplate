@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
 env:
-  SERVICE_NAME: 'lixinft-be'
+  SERVICE_NAME: 'lixi-nft-be'
   DOCKER_USERNAME: 'cohostai'
   CONTAINER_SERVICE_NAME: 'lixinft-be'
 
