@@ -84,7 +84,7 @@ jobs:
               \"$CONTAINER_SERVICE_NAME\": {
                 \"image\": \"$IMAGE_TAG\",
                 \"environment\": {
-                  \"NODE_ENV\": \"production\",
+                  \"NODE_ENV\": \"development\",
                   \"MONGODB_URL\": \"$MONGODB_URL\"
                 },
                 \"ports\": {

@@ -9,6 +9,10 @@ export class ValidationPipe implements PipeTransform {
       return value;
     }
     const object = plainToClass(metatype, value);
+    if (!object) {
+      return value;
+    }
+
     const errors = await validate(object);
     if (errors.length > 0) {
       throw new UserInputError(
