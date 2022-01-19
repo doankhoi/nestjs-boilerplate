@@ -66,6 +66,32 @@ export const env = convict({
       doc: 'Api key mail',
     },
   },
+  aws: {
+    accessKey: {
+      format: String,
+      default: '',
+      env: 'AWS_ACCESS_KEY',
+      doc: 'Amazon access key',
+    },
+    keySecret: {
+      format: String,
+      default: '',
+      env: 'AWS_KEY_SECRET',
+      doc: 'Amazon key secret',
+    },
+    region: {
+      format: String,
+      default: '',
+      env: 'AWS_REGION',
+      doc: 'Amazon region',
+    },
+    S3Bucket: {
+      format: String,
+      default: 'lixinft-image',
+      env: 'AWS_S3_BUCKET',
+      doc: 'Amazon S3 bucket',
+    },
+  },
 });
 
 export default env;
