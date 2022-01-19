@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsEmail,
@@ -32,5 +33,6 @@ export class SignupDto {
   @Field()
   @IsNotEmpty()
   @IsString()
+  @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
   walletAddress: string;
 }

@@ -45,9 +45,11 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     if (req['currentUserAddress']) {
+      console.log(req['currentUserAddress']);
       const user = await this.userService.findUserByWalletAddress(
         req['currentUserAddress'],
       );
+      console.log(req['currentUserAddress']);
       req['user'] = user || null;
     }
 

@@ -51,12 +51,12 @@ export class Campaign {
 
   @Column({ default: () => 0 })
   @Expose()
-  @Field({ defaultValue: 0 })
+  @Field(() => Number, { defaultValue: 0 })
   numberItem = 0;
 
   @Column({ default: () => 0 })
   @Expose()
-  @Field({ defaultValue: 0 })
+  @Field(() => Number, { defaultValue: 0 })
   amountOnItem = 0;
 
   @Column()
