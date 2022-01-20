@@ -42,7 +42,7 @@ export const sendEmail = async (
     });
   };
 
-  readHTMLFile('./src/assets/templates/udacity-index.html', (err, html) => {
+  readHTMLFile('./src/assets/templates/mail.html', (err, html) => {
     const template = handlebars.compile(html);
 
     const common = {

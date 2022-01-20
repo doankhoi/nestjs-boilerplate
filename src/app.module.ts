@@ -1,3 +1,10 @@
+import 'reflect-metadata';
+import {
+  Module,
+  CacheModule,
+  NestModule,
+  MiddlewareConsumer,
+} from '@nestjs/common';
 import {
   CacheService,
   DateScalar,
@@ -6,16 +13,18 @@ import {
   TypeOrmService,
 } from '@configs';
 import { HttpModule } from '@nestjs/axios';
-import { CacheModule, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthMiddleware } from '@common';
+
 import * as Services from '@services';
 import 'reflect-metadata';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as Resolvers from './resolvers';
 import * as Controller from './controllers';
+
 @Module({
   imports: [
     HttpModule,
@@ -36,4 +45,8 @@ import * as Controller from './controllers';
     ...Object.values(Services),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}
