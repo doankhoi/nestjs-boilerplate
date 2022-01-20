@@ -1,4 +1,3 @@
-import { SignupDto } from '@dtos';
 import { User } from '@entities';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@repositories';
@@ -17,7 +16,7 @@ export class UserService {
       .findOne({ where: { walletAddress } });
   }
 
-  signup(data: SignupDto) {
-    return this.userRepository.create(new User({ ...data }));
+  signup(user: User) {
+    return this.userRepository.create(user);
   }
 }

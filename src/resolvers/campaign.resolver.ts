@@ -46,6 +46,14 @@ export class CampaignResolver {
     return { campaigns, total, offset };
   }
 
+  @Query(() => Campaign)
+  async getCampaign(@Args('campaignId') campaignId: string): Promise<Campaign> {
+    const campaign = await this.campaignService.campaignRepository.findById(
+      campaignId,
+    );
+    return campaign;
+  }
+
   @Mutation(() => Campaign)
   @UseGuards(AuthGuard)
   async createCampaign(
