@@ -7,11 +7,13 @@ export const CurrentUserAddress = createParamDecorator(
     const { req } = ctx.getContext();
 
     if (req['currentUserAddress']) {
-      return req['currentUserAddress'];
+      const currentUserAddress = req['currentUserAddress'];
+      return (currentUserAddress as string).toLowerCase();
     }
 
     if (req.raw && req.raw['currentUserAddress']) {
-      return req.raw['currentUserAddress'];
+      const currentUserAddress = req.raw['currentUserAddress'];
+      return (currentUserAddress as string).toLowerCase();
     }
 
     return null;

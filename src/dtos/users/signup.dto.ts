@@ -1,12 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Transform } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsEmail,
-  IsOptional,
-  IsString,
-  IsUrl,
-} from 'class-validator';
+import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 
 @InputType()
 export class SignupDto {
@@ -29,10 +22,4 @@ export class SignupDto {
   @IsOptional()
   @IsUrl()
   avatar?: string;
-
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
-  walletAddress: string;
 }

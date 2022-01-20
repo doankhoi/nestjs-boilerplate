@@ -1,4 +1,4 @@
-import { AuthGuard, CurrentUser } from '@common';
+import { AuthGuard, CurrentUser, CurrentUserAddress } from '@common';
 import { SignupDto } from '@dtos';
 import { User } from '@entities';
 import { UseGuards } from '@nestjs/common';
@@ -11,13 +11,22 @@ export class UsersResolver {
   constructor(private userService: UserService) {}
 
   @Mutation(() => User)
-  async signup(@Args('input') input: SignupDto): Promise<User> {
-    const { walletAddress } = input;
+  @UseGuards(AuthGuard)
+  async signup(
+    @Args({ name: 'input', type: () => SignupDto, defaultValue: {} })
+    input: SignupDto = {},
+    @CurrentUserAddress() userAddress: string | null,
+  ): Promise<User> {
+    if (!userAddress) {
+      throw new UserInputError('Not found wallet address');
+    }
+
+    const walletAddress = userAddress.toLowerCase();
     const user = await this.userService.findUserByWalletAddress(walletAddress);
     if (user) {
       throw new UserInputError('User already existed');
     }
-    return this.userService.signup(input);
+    return this.userService.signup(new User({ ...input, walletAddress }));
   }
 
   @Query(() => User)

@@ -88,7 +88,7 @@ jobs:
                 \"image\": \"$IMAGE_TAG\",
                 \"environment\": {
                   \"NODE_ENV\": \"development\",
-                  \"MONGODB_URL\": \"MONGODB_URL\",
+                  \"MONGODB_URL\": \"$MONGODB_URL\",
                   \"AWS_ACCESS_KEY_ID\": \"$AWS_ACCESS_KEY_ID\",
                   \"AWS_SECRET_ACCESS_KEY\": \"$AWS_SECRET_ACCESS_KEY\",
                   \"AWS_REGION\": \"$AWS_REGION\"
