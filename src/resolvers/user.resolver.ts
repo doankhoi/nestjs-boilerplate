@@ -13,7 +13,8 @@ export class UsersResolver {
   @Mutation(() => User)
   @UseGuards(AuthGuard)
   async signup(
-    @Args('input') input: SignupDto,
+    @Args({ name: 'input', type: () => SignupDto, defaultValue: {} })
+    input: SignupDto = {},
     @CurrentUserAddress() userAddress: string | null,
   ): Promise<User> {
     if (!userAddress) {
