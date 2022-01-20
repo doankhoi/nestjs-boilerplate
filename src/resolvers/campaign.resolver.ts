@@ -34,7 +34,7 @@ export class CampaignResolver {
     const { limit, offset } = input;
 
     if (!user) {
-      throw new ForbiddenError('Invalid token');
+      throw new ForbiddenError('User not register.');
     }
 
     const [campaigns, total] =
@@ -53,7 +53,7 @@ export class CampaignResolver {
     @CurrentUser() user: User | null,
   ): Promise<Campaign> {
     if (!user) {
-      throw new ForbiddenError(`Invalid token.`);
+      throw new ForbiddenError(`User not register.`);
     }
     const { templateId } = input;
     const template = await this.templateService.templateRepository.findById(
