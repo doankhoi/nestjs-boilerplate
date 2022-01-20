@@ -5,20 +5,25 @@ import {
   NestModule,
   MiddlewareConsumer,
 } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
-import { GraphQLModule } from '@nestjs/graphql';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {
-  GraphqlService,
   CacheService,
   DateScalar,
+  GraphqlService,
+  MulterConfigService,
   TypeOrmService,
 } from '@configs';
-import * as Resolvers from './resolvers';
-import * as Services from '@services';
+import { HttpModule } from '@nestjs/axios';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthMiddleware } from '@common';
+
+import * as Services from '@services';
+import 'reflect-metadata';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import * as Resolvers from './resolvers';
+import * as Controller from './controllers';
 
 @Module({
   imports: [
@@ -30,8 +35,9 @@ import { AuthMiddleware } from '@common';
       useClass: CacheService,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmService }),
+    MulterModule.registerAsync({ useClass: MulterConfigService }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, ...Object.values(Controller)],
   providers: [
     AppService,
     ...Object.values(Resolvers),
