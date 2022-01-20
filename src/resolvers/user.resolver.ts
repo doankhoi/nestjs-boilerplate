@@ -1,8 +1,10 @@
+import { AuthGuard, CurrentUser } from '@common';
 import { SignupDto } from '@dtos';
 import { User } from '@entities';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserService } from '@services';
-import { UserInputError } from 'apollo-server-core';
+import { UserInputError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -16,5 +18,14 @@ export class UsersResolver {
       throw new UserInputError('User already existed');
     }
     return this.userService.signup(input);
+  }
+
+  @Query(() => User)
+  @UseGuards(AuthGuard)
+  async me(@CurrentUser() user: User | null): Promise<User> {
+    if (!user) {
+      throw new ForbiddenError('Invalid token');
+    }
+    return user;
   }
 }
