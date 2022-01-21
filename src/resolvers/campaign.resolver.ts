@@ -4,7 +4,7 @@ import {
   CreateCampaignDto,
   GetCampaignsDto,
 } from '@dtos';
-import { Campaign, Template, User } from '@entities';
+import { Campaign, CampaignMember, Template, User } from '@entities';
 import { UseGuards } from '@nestjs/common';
 import {
   Args,
@@ -14,7 +14,12 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { TemplateService, CampaignService, UserService } from '@services';
+import {
+  TemplateService,
+  CampaignService,
+  UserService,
+  CampaignMemberService,
+} from '@services';
 import { UserInputError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver(() => Campaign)
@@ -23,6 +28,7 @@ export class CampaignResolver {
     private templateService: TemplateService,
     private campaignService: CampaignService,
     private userService: UserService,
+    private campaignMemberService: CampaignMemberService,
   ) {}
 
   @Query(() => CampaignsResponseDto)
@@ -77,11 +83,18 @@ export class CampaignResolver {
     );
   }
 
-  // Resolve field
+  // Resolve fields
   @ResolveField(() => Template)
   async template(@Parent() campaign: Campaign): Promise<Template> {
     return await this.templateService.templateRepository.findById(
       campaign.templateId,
+    );
+  }
+
+  @ResolveField(() => [CampaignMember])
+  async members(@Parent() campaign: Campaign): Promise<CampaignMember[]> {
+    return await this.campaignMemberService.campaignMemberRepository.findCampaignMembers(
+      campaign._id.toString(),
     );
   }
 
