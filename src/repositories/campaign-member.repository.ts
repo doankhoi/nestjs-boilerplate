@@ -12,4 +12,8 @@ export class CampaignMemberRepository extends BaseRepository<CampaignMember> {
       userId,
     });
   }
+
+  findCampaignMembers(campaignId: string) {
+    return this.getRepository().find({ where: { campaignId } });
+  }
 }
