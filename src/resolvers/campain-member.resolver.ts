@@ -2,8 +2,14 @@ import { AuthGuard, CampaignMemberStatus, CurrentUser } from '@common';
 import { ApproveMemberDto } from '@dtos';
 import { CampaignMember, User } from '@entities';
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CampaignMemberService, CampaignService } from '@services';
+import {
+  Args,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { CampaignMemberService, CampaignService, UserService } from '@services';
 import { UserInputError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver(() => User)
@@ -11,6 +17,7 @@ export class CampaignMemberResolver {
   constructor(
     private campaignMemberService: CampaignMemberService,
     private campaignService: CampaignService,
+    private userService: UserService,
   ) {}
 
   @Mutation(() => CampaignMember)
@@ -78,5 +85,13 @@ export class CampaignMemberResolver {
     }
     campaignMember.status = CampaignMemberStatus.APPROVED;
     return campaignMember;
+  }
+
+  // Resolve field
+  @ResolveField(() => User)
+  async user(@Parent() campaignMember: CampaignMember): Promise<User> {
+    return await this.userService.userRepository.findById(
+      campaignMember.userId,
+    );
   }
 }
