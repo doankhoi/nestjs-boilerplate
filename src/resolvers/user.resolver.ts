@@ -17,15 +17,21 @@ export class UsersResolver {
     input: SignupDto = {},
     @CurrentUserAddress() userAddress: string | null,
   ): Promise<User> {
+    const { email } = input;
     if (!userAddress) {
       throw new UserInputError('Not found wallet address');
     }
 
     const walletAddress = userAddress.toLowerCase();
-    const user = await this.userService.findUserByWalletAddress(walletAddress);
-    if (user) {
-      throw new UserInputError('User already existed');
+    let user = await this.userService.findUserByWalletAddress(walletAddress);
+    if (!user && email) {
+      user = await this.userService.findUserByEmail(email);
     }
+
+    if (user) {
+      throw new UserInputError('User already exists');
+    }
+
     return this.userService.signup(new User({ ...input, walletAddress }));
   }
 

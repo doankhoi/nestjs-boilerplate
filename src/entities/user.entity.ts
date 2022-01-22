@@ -16,7 +16,7 @@ export class User {
   @Field({ nullable: true, defaultValue: 'Anonymous' })
   fullName?: string = 'Anonymous';
 
-  @Column({ length: 200 })
+  @Column({ length: 200, unique: true })
   @Expose()
   @Field({ nullable: true })
   email?: string;
@@ -31,9 +31,9 @@ export class User {
   @Field({ nullable: true })
   avatar?: string;
 
-  @Column({ type: 'bool', default: false })
+  @Column({ type: 'bool', default: () => false })
   @Expose()
-  @Field(() => Boolean, { defaultValue: false })
+  @Field(() => Boolean, { defaultValue: false, nullable: true })
   isEmailVerified = false;
 
   @Column({ type: 'datetime', default: null, nullable: true })
@@ -70,6 +70,7 @@ export class User {
     );
 
     this.role = this.role || SystemRole.USER;
+    this.isEmailVerified = this.isEmailVerified || false;
     this.createdAt = this.createdAt || new Date();
     this.updatedAt = new Date();
   }
