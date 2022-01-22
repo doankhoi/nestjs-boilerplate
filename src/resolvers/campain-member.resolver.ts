@@ -12,7 +12,7 @@ import {
 import { CampaignMemberService, CampaignService, UserService } from '@services';
 import { UserInputError, ForbiddenError } from 'apollo-server-core';
 
-@Resolver(() => User)
+@Resolver(() => CampaignMember)
 export class CampaignMemberResolver {
   constructor(
     private campaignMemberService: CampaignMemberService,
