@@ -1,17 +1,17 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { CustomLogger } from '@configs';
-import * as compression from 'compression';
-import * as bodyParser from 'body-parser';
-
-import rateLimit from 'express-rate-limit';
-import { env } from '@environments';
 import {
   LoggerMiddleware,
   LoggingInterceptor,
   TimeoutInterceptor,
   ValidationPipe,
 } from '@common';
+import { CustomLogger } from '@configs';
+import { env } from '@environments';
+import { NestFactory } from '@nestjs/core';
+import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
+import * as cors from 'cors';
+import rateLimit from 'express-rate-limit';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -28,6 +28,12 @@ async function bootstrap() {
       limit: '50mb',
       extended: true,
       parameterLimit: 50000,
+    }),
+  );
+
+  app.use(
+    cors({
+      origin: true,
     }),
   );
 
