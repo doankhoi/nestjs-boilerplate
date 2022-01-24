@@ -16,6 +16,10 @@ export class UserService {
       .findOne({ where: { walletAddress } });
   }
 
+  findUserByEmail(email: string) {
+    return this.userRepository.getRepository().findOne({ where: { email } });
+  }
+
   signup(user: User) {
     return this.userRepository.create(user);
   }

@@ -7,6 +7,7 @@ import {
   IsString,
   IsPositive,
   IsUrl,
+  IsDate,
 } from 'class-validator';
 
 @InputType()
@@ -49,4 +50,9 @@ export class CreateCampaignDto {
   @IsNotEmpty()
   @IsString()
   currency: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsDate()
+  endTime: Date;
 }

@@ -85,6 +85,16 @@ export class Campaign {
 
   @Column()
   @Expose()
+  @Field({ nullable: true })
+  endTime?: Date;
+
+  @Column()
+  @Expose()
+  @Field({ nullable: true })
+  mergeImageUrl?: string;
+
+  @Column()
+  @Expose()
   @Field()
   createdAt: Date;
 
