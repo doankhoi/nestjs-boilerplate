@@ -6,3 +6,4 @@ export * from './system-role.enum';
 export * from './template-pos.enum';
 export * from './template-status.enum';
 export * from './upload-folder.enum';
+export * from './share-type.enum';

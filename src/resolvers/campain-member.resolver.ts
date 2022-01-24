@@ -1,4 +1,9 @@
-import { AuthGuard, CampaignMemberStatus, CurrentUser } from '@common';
+import {
+  AuthGuard,
+  CampaignMemberStatus,
+  CurrentUser,
+  ShareType,
+} from '@common';
 import { ApproveMemberDto } from '@dtos';
 import { CampaignMember, User } from '@entities';
 import { UseGuards } from '@nestjs/common';
@@ -44,9 +49,13 @@ export class CampaignMemberResolver {
         campaignId,
       );
     if (!campaignMember) {
+      const memberStatus =
+        campaign.shareType == ShareType.AUTO_APPROVE
+          ? CampaignMemberStatus.APPROVED
+          : CampaignMemberStatus.PENDING;
       campaignMember =
         await this.campaignMemberService.campaignMemberRepository.create(
-          new CampaignMember({ userId, campaignId }),
+          new CampaignMember({ userId, campaignId, status: memberStatus }),
         );
     }
     return campaignMember;
