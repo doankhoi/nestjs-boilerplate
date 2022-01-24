@@ -13,4 +13,8 @@ export class CampaignRepository extends BaseRepository<Campaign> {
       skip: offset,
     });
   }
+
+  findCampaignByShareId(shareId: string) {
+    return this.getRepository().findOne({ where: { shareId } });
+  }
 }

@@ -16,7 +16,7 @@ export class User {
   @Field({ nullable: true, defaultValue: 'Anonymous' })
   fullName?: string = 'Anonymous';
 
-  @Column({ length: 200, unique: true })
+  @Column({ length: 200 })
   @Expose()
   @Field({ nullable: true })
   email?: string;

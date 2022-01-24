@@ -3,6 +3,7 @@ import {
   CampaignsResponseDto,
   CreateCampaignDto,
   GetCampaignsDto,
+  UpdateShareLinkDto,
 } from '@dtos';
 import { Campaign, CampaignMember, Template, User } from '@entities';
 import { UseGuards } from '@nestjs/common';
@@ -20,6 +21,7 @@ import {
   UserService,
   CampaignMemberService,
 } from '@services';
+import { randPhrases } from '@utils';
 import { UserInputError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver(() => Campaign)
@@ -54,10 +56,60 @@ export class CampaignResolver {
 
   @Query(() => Campaign)
   async getCampaign(@Args('campaignId') campaignId: string): Promise<Campaign> {
+    let campaign = await this.campaignService.campaignRepository.findById(
+      campaignId,
+    );
+    if (!campaign) {
+      campaign =
+        await this.campaignService.campaignRepository.findCampaignByShareId(
+          campaignId,
+        );
+    }
+
+    return campaign;
+  }
+
+  async genShareId(): Promise<string> {
+    while (true) {
+      const shareId = randPhrases(16);
+      const campaign =
+        await this.campaignService.campaignRepository.findCampaignByShareId(
+          shareId,
+        );
+      if (!campaign) {
+        return shareId;
+      }
+    }
+  }
+
+  @Mutation(() => Campaign)
+  @UseGuards(AuthGuard)
+  async updateShareLink(
+    @Args('input') input: UpdateShareLinkDto,
+    @CurrentUser() user: User | null,
+  ): Promise<Campaign> {
+    if (!user) {
+      throw new ForbiddenError(`User not register.`);
+    }
+
+    const { campaignId } = input;
     const campaign = await this.campaignService.campaignRepository.findById(
       campaignId,
     );
-    return campaign;
+
+    if (!campaign) {
+      throw new UserInputError(`Not found campaign id: ${campaignId}`);
+    }
+
+    if (user._id.toString() !== campaign.creatorId) {
+      throw new ForbiddenError(`You are not a owner of this campaign`);
+    }
+
+    if (!campaign.shareId) {
+      campaign.shareId = await this.genShareId();
+    }
+
+    return await this.campaignService.campaignRepository.update(campaign);
   }
 
   @Mutation(() => Campaign)
@@ -78,8 +130,9 @@ export class CampaignResolver {
       throw new UserInputError(`Not found template id: ${templateId}`);
     }
 
+    const shareId = await this.genShareId();
     return await this.campaignService.campaignRepository.create(
-      new Campaign({ ...input, creatorId: user._id.toString() }),
+      new Campaign({ ...input, creatorId: user._id.toString(), shareId }),
     );
   }
 
