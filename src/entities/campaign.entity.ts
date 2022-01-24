@@ -1,4 +1,9 @@
-import { CampaignStatus, PaymentStatus, TemplatePosition } from '@common';
+import {
+  CampaignStatus,
+  PaymentStatus,
+  ShareType,
+  TemplatePosition,
+} from '@common';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Expose, plainToClass } from 'class-transformer';
 import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
@@ -80,6 +85,28 @@ export class Campaign {
 
   @Column()
   @Expose()
+  @Field({ nullable: true })
+  shareId?: string;
+
+  @Column()
+  @Expose()
+  @Field({ nullable: true })
+  expiredTimeShare?: Date;
+
+  @Column({
+    type: 'enum',
+    enum: ShareType,
+    default: () => ShareType.MANUAL_APPROVE,
+  })
+  @Expose()
+  @Field(() => ShareType, {
+    nullable: true,
+    defaultValue: ShareType.MANUAL_APPROVE,
+  })
+  shareType?: ShareType;
+
+  @Column()
+  @Expose()
   @Field()
   creatorId: string;
 
@@ -111,6 +138,7 @@ export class Campaign {
       }),
     );
 
+    this.shareType = this.shareType || ShareType.MANUAL_APPROVE;
     this.createdAt = this.createdAt || new Date();
     this.updatedAt = new Date();
   }

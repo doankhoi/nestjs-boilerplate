@@ -48,6 +48,7 @@
     "mongodb": "3",
     "mongoose": "^6.1.6",
     "nodemailer": "^6.7.2",
+    "randomstring": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
