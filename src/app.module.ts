@@ -24,6 +24,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as Resolvers from './resolvers';
 import * as Controller from './controllers';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import * as Controller from './controllers';
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmService }),
     MulterModule.registerAsync({ useClass: MulterConfigService }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController, ...Object.values(Controller)],
   providers: [

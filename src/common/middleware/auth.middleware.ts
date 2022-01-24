@@ -8,6 +8,7 @@ import {
 import { UserService } from '@services';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'web3-token';
+import { ForbiddenError, ApolloError } from 'apollo-server-core';
 
 declare global {
   // eslint-disable-next-line
@@ -15,7 +16,7 @@ declare global {
     interface Request {
       currentUserAddress: string | null;
       user?: User | null;
-      authError?: HttpException | null;
+      authError?: HttpException | null | ApolloError;
     }
   }
 }
@@ -29,7 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
     const token = authorization || Authorization || '';
 
     if (!token) {
-      req['authError'] = new UnauthorizedException('Token required');
+      req['authError'] = new ForbiddenError('Token required');
       return next();
     }
 
@@ -41,7 +42,7 @@ export class AuthMiddleware implements NestMiddleware {
         ? error.message
         : 'Invalid token';
 
-      req['authError'] = new UnauthorizedException(errorMsg);
+      req['authError'] = new ForbiddenError(errorMsg);
     }
 
     if (req['currentUserAddress']) {

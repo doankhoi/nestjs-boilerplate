@@ -41,6 +41,12 @@ export const env = convict({
     doc: 'Mongo Database Url',
   },
   mail: {
+    fromEmail: {
+      format: String,
+      default: '',
+      env: 'FROM_MAIL_SENDER',
+      doc: 'Sender of system email',
+    },
     author: {
       format: String,
       default: 'Lixi',

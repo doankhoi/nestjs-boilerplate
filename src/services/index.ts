@@ -6,3 +6,4 @@ export * from './email.service';
 export * from './campaign.service';
 export * from './template.service';
 export * from './campaign-member.service';
+export * from './schedule-tasks.service';
